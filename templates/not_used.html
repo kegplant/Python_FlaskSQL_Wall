@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Registration Index</title>
+        <style>
+            label{
+                display:block;
+            }
+        </style>
+        <!-- <link rel="stylesheet" href={{url_for('static',filename='style.css')}}> -->
+    </head>
+    <body>
+        <p>logged in: {{session['loggedIn']}}</p>
+        <p>user ID: {{session['user_ID']}}</p>
+        <form action='/log_out'><button>log out</button></form>
+        <form action='/process' method='post'>
+            <label>
+                email
+                <input type='text' name='eml' value='abc@cde.com'>
+            </label>
+            <label>
+                First Name:
+                <input type='text' name='first_name' value='S'>
+            </label>
+            <label>
+                Last Name:
+                <input type='text' name='last_name' value='W'>
+            </label>      
+            <label>
+                Password:
+                <input type='password' name='password' value='abcDEF23ff'>
+            </label>
+            <label>
+                Confirm Password:
+                <input type='password' name='password2' value='abcDEF23ff'>
+            </label>
+            <!-- <label>
+                Birthday:
+                <input type='date' name='bday'>
+            </label> -->
+            <input type='hidden' name='type' value='register'>
+            <button>submit</button>
+        </form>
+        <form action='/process' method='post'>
+            <label>
+                email
+                <input type='text' name='eml' value='abc@cde.com'>
+            </label>     
+            <label>
+                Password:
+                <input type='password' name='password' value='abcDEF23ff'>
+            </label>
+            <input type='hidden' name='type' value='log in'>
+            <button>log in</button>
+        </form>
+        <p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </p>
+    </body>
+</html>

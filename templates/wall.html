@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Registration result</title>
+        <style>
+    
+        </style>
+        <!-- <link rel="stylesheet" href={{url_for('static',filename='style.css')}}> -->
+    </head>
+    <body>
+        <div>
+            <p>logged in: {{session['loggedIn']}}</p>
+            <form action='/log_out'><button>log out</button></form>
+        </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action='/new_message' method='post'>
+            <textarea name='message'>new message...</textarea>
+            <button>Post Message</button>
+        </form>
+        <ul>
+            {% if messagesReal %}
+            {% for messageIndex,message in messagesReal %}
+                <li><h4>{{message['first_name']}} {{message['last_name']}}-{{message['created_at']}}</h6>
+                    <p>
+                        {{message['message']}}
+                        {{messageIndex}}
+                    </p>
+                </li>
+                <li>
+                    <ul>
+                    {% if commentsArr[messageIndex] %}
+                    {% for comment in commentsArr[messageIndex] %}
+                        <li><h6>{{comment['first_name']}} {{comment['last_name']}}-{{comment['created_at']}}</h6>
+                            <p>
+                                {{comment['comment']}}
+                            </p>
+                        </li>
+                    {%endfor%}
+                    {%endif%}
+                    </ul>
+                </li>
+                <form action='/new_comment' method='post'>
+                    <textarea name='comment'>new comment...</textarea>
+                    <input type='hidden' name='message_id' value="{{message['id']}}">
+                    <button>Post comment</button>
+                </form>
+            {% endfor %}
+
+            {% endif %}
+        </ul>
+        <!-- <form action='/'>
+            <button>Add More Users</button>
+        </form> -->
+    </body>
+</html>
